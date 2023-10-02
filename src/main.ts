@@ -1,11 +1,16 @@
 import "./style.css"
 import Canvas from "./utils/Canvas"
-import Select from "./utils/Select"
+import Message from "./components/Message"
 
 const canvas = new Canvas()
 
 
-
+function create(){
+  setTimeout(() => {
+    Message.success("Yes")
+    create()
+  }, 1000);
+}
 
 function draw(){
   // rect.x ++

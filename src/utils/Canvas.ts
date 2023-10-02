@@ -57,19 +57,73 @@ class Canvas {
         this.stage.addListener("mousemove", (event) => {
             // if(!Select.selected) return
             const [x, y] = [event.clientX, event.clientY]
-            this.touch = { x, y }
+            const diffX = x-this.touch.x
+            const diffY = y-this.touch.y
             if (Select.pressing && Select.selectType === "move") {
                 // 计算点击的位置
                 Select.setPosition(
-                    Select.pressStartPosition.x + this.touch.x - this.touchBegin.x ,
-                    Select.pressStartPosition.y + this.touch.y - this.touchBegin.y
+                    Select.x + diffX,
+                    Select.y + diffY
                 )
             }
-            // 根据SelectType来做出不同的操作
-            else if(Select.selectType === "left"){
-                Select.target.width--
-                console.log(Select.target.width,Select.target.texture.width)
+            // 设置图片x,y和width,height
+            else if(Select.selectType === "left top"){
+                Select.target.width = Select.width - diffX
+                Select.target.height = Select.height - diffY
+                Select.setPosition(
+                    Select.x + diffX,
+                    Select.y + diffY
+                )
+                Select.painting()
             }
+            else if(Select.selectType === "top"){
+                Select.target.height = Select.height - diffY
+                Select.setPosition(
+                    Select.x ,
+                    Select.y + diffY
+                )
+                Select.painting()
+            }
+            else if(Select.selectType === "right top"){
+                Select.target.width = Select.width + diffX
+                Select.target.height = Select.height - diffY
+                Select.setPosition(
+                    Select.x ,
+                    Select.y + diffY
+                )
+                Select.painting()
+            }
+            else if(Select.selectType === "left"){
+                Select.target.width = Select.width - diffX
+                Select.setPosition(
+                    Select.x + diffX,
+                    Select.y
+                )
+                Select.painting()
+            }
+            else if(Select.selectType === "right"){
+                Select.target.width = Select.width + diffX
+                Select.painting()
+            }
+            else if(Select.selectType === "left bottom"){
+                Select.target.width = Select.width - diffX
+                Select.target.height = Select.height + diffY
+                Select.setPosition(
+                    Select.x + diffX,
+                    Select.y
+                )
+                Select.painting()
+            }
+            else if(Select.selectType === "bottom"){
+                Select.target.height = Select.height + diffY
+                Select.painting()
+            }
+            else if(Select.selectType === "right bottom"){
+                Select.target.width = Select.width + diffX
+                Select.target.height = Select.height + diffY
+                Select.painting()
+            }
+            this.touch = { x, y }
         })
 
         // 给场景添加鼠标按下事件
