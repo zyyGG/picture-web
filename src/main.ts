@@ -5,12 +5,14 @@ import Message from "./components/Message"
 const canvas = new Canvas()
 
 
-function create(){
-  setTimeout(() => {
-    Message.success("Yes")
-    create()
-  }, 1000);
-}
+Message.success("success")
+Message.error("error")
+Message.warn("warn")
+console.log(Message.prototype)
+
+Message.success("success",{
+  fontSize:"16px"
+})
 
 function draw(){
   // rect.x ++

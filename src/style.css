@@ -57,3 +57,11 @@ body{
   color:white;
 }
 
+/* app控制器页面 */
+.app{
+  position: absolute;
+  right:0;
+  top:0;
+  color:white;
+}
+
