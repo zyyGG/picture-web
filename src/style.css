@@ -3,6 +3,12 @@
   --error-color:#d62b00;
   --warn-color:#9c5900;
   --info-color:#28a5f8;
+
+  --primary-color:#3e3e3e;
+  --white-500:#ffffff;
+  --white-400:#dddddd;
+  --white-300:#bbbbbb;
+  --white-200:#aaaaaa;
 }
 
 *{
@@ -62,6 +68,73 @@ body{
   position: absolute;
   right:0;
   top:0;
+  color:white;
+}
+
+input.primary{
+  background-color: transparent;
+  color:var(--white-500);
+  border:1px solid var(--white-200);
+  padding:0.5em 0.7em;
+  border-radius: 0.3em;
+  width:4.5rem;
+  margin-left:1rem;
+}
+input.primary:focus{
+  border-color: var(--white-500);
+  outline: none;
+}
+
+.tool{
+  position: absolute;
+  right:0;
+  top:0;
+  /* border:1px solid red; */
+  margin:1rem 1rem;
+}
+/* 折叠状态的菜单 */
+.tool-state-fold{
+  z-index:1;
+  width:50px;
+  height:50px;
+  background-color:var(--primary-color);
+  border-radius: 0.6rem;
+}
+
+/* 展开状态的菜单 */
+.tool-state-menu{
+  width:15rem;
+  padding:1rem 0.5rem;
+  box-sizing: border-box;
+  background-color:var(--primary-color);
+
+  /* display: flex; */
+  /* flex-direction: column; */
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 1rem;
+}
+
+.tool-state-menu-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.title{
+  width:1rem;
+  color:var(--white-500);
+}
+
+.tool-group{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+label{
+  width:3rem;
   color:white;
 }
 

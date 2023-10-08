@@ -3,6 +3,7 @@ import { Application, Graphics, ColorSource, Sprite, SpriteSource, FederatedEven
 import Select from "./Select"
 class Canvas {
     #app
+    view
     stage
     touchBegin: { x: number, y: number } = { x: 0, y: 0 } //点击或者触摸的起始点
     touch: { x: number, y: number } = { x: 0, y: 0 } //点击或者触摸的移动点
@@ -15,6 +16,7 @@ class Canvas {
         })
 
         document.body.appendChild(this.#app.view as HTMLCanvasElement)
+        this.view = this.#app.view
 
         this.stage = this.#app.stage
         // 初始化Select
@@ -49,7 +51,7 @@ class Canvas {
         const mask = new Graphics()
         mask.beginFill("#ffffff")
         mask.drawRect(0, 0, this.#app.renderer.width, this.#app.renderer.height)
-        mask.alpha = 0
+        mask.alpha = 0.1
         mask.endFill()
         this.stage.addChild(mask)
 
@@ -137,10 +139,11 @@ class Canvas {
                 Select.pressStartPosition = { x: Select.x, y: Select.y }
                 Select.selectType = "move"
             }
+            
         })
 
         // 给场景添加鼠标弹起事件
-        this.stage.addListener("mouseup", (event) => {
+        this.stage.addListener("pointerup", (event) => {
             Select.pressing = false
             this.touch = { x: 0, y: 0 }
             // 清空selectType保存的状态

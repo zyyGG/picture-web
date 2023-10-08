@@ -52,6 +52,11 @@ class Message{
         this.#root?.appendChild(div) //为根节点增加创建的节点
     }
 
+    /**
+     * 失败的文本显示
+     * @param message 需要显示的文本信息
+     * @param options 设置
+     */
     static error(message:string,options?:MessageOption){
         const finalOptions:MessageOption = this.#getOptions(options)
         this.#createRoot()
@@ -65,6 +70,11 @@ class Message{
         this.#root?.appendChild(div) //为根节点增加创建的节点
     }
 
+    /**
+     * 警告的文本显示
+     * @param message 需要显示的文本信息
+     * @param options 设置
+     */
     static warn(message:string,options?:MessageOption){
         const finalOptions:MessageOption = this.#getOptions(options)
         this.#createRoot()
@@ -123,8 +133,6 @@ class Message{
         this.#root?.removeChild(div)
         this.#rootNoChldren === true && this.#destoryRoot()
     }
-
-
 }
 
 export default Message

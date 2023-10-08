@@ -1,6 +1,6 @@
 import { Container, Graphics } from "pixi.js"
 import type { FederatedEventTarget, Sprite } from "pixi.js"
-import type { pointerGroupConfigIF } from "./type"
+import type { pointerGroupConfigIF } from "../../../picture-web2/src/type"
 const pointerGroupConfig: pointerGroupConfigIF[] = [
     //左上
     { 
@@ -12,7 +12,7 @@ const pointerGroupConfig: pointerGroupConfigIF[] = [
     }, 
     //上
     { 
-        type: "left",
+        type: "top",
         width: 10, 
         height: 10, 
         fillColor: "white",
@@ -107,20 +107,24 @@ export default class Select {
     static pressing:boolean //是否处于按压并且选中的状态
     static pressStartPosition:{x:number,y:number}={x:0,y:0}
     static stage :Container
-    static get x():number { return Select.target.x } //坐标x
-    static get y():number { return Select.target.y } //坐标y
-    static get width():number{return Select.target.width}
-    static get height():number{return Select.target.height}
+    static get x():number { return this.selected ? Select.target.x : 0 } //坐标x
+    static get y():number { return this.selected ? Select.target.y: 0 } //坐标y
+    static get width():number{return this.selected ?   Select.target.width: 0}
+    static get height():number{return this.selected ?  Select.target.height: 0}
     static set width(value:number){
         if(Select.selected){
             Select.target.width = value
             Select.selectBox!.width = value
+            const toolInputWElement:HTMLInputElement | null = document.getElementById("tool-input-w") as any
+            toolInputWElement && (toolInputWElement.value = String(value))
         }
     }
     static set height(value:number){
         if(Select.selected){
             Select.target.height = value
             Select.selectBox!.height = value
+            const toolInputHElement:HTMLInputElement | null = document.getElementById("tool-input-h") as any
+            toolInputHElement && (toolInputHElement.value = String(value))
         }
     }
     static get selected():boolean { return Select.selectBox === undefined || Select.selectBox.destroyed ? false : true } //是否处于选中状态
@@ -187,6 +191,11 @@ export default class Select {
         })
         this.stage.addChild(Select.selectBox!)
         Select.selectBox.position.set(Select.target.x, Select.target.y)
+
+        const toolInputWElement:HTMLInputElement | null = document.getElementById("tool-input-w") as any
+        toolInputWElement && (toolInputWElement.value = String(Select.target.width))
+        const toolInputHElement:HTMLInputElement | null = document.getElementById("tool-input-h") as any
+        toolInputHElement && (toolInputHElement.value = String(Select.target.height))
     }
 
     // 销毁选中框,同时销毁附属的目标,和部分事件
@@ -208,6 +217,14 @@ export default class Select {
         if (!Select.selected) return false
         Select.target.position.set(x, y)
         Select.selectBox?.position.set(x, y)
+
+        const toolInputXElement:HTMLInputElement | null = document.getElementById("tool-input-x") as any
+        const toolInputYElement:HTMLInputElement | null = document.getElementById("tool-input-y") as any
+
+        toolInputXElement && (toolInputXElement.value = String(x))
+        toolInputYElement && (toolInputYElement.value = String(y))
+        
+        // toolInputXElement?.
         return true
     }
 }
